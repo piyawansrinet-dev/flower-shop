@@ -41,27 +41,23 @@ button{
 <body>
 
 <div class="box">
-<h2>🧺 ตะกร้าสินค้า</h2>
+<h2>ตะกร้าสินค้า</h2>
 
 <div id="cartItems"></div>
 
-<div class="total">
-ยอดรวม: <span id="totalPrice">0</span> บาท
-</div>
-<!-- ปุ่ม LINE -->
-<div style="text-align:center; margin:40px 0;">
-  <a id="lineOrderBtn" target="_blank">
-    <button style="
-      background:#06C755;
-      color:white;
-      border:none;
-      padding:15px 40px;
-      font-size:18px;
-      border-radius:40px;
-      cursor:pointer;
-    ">
-      💬 สั่งผ่าน LINE
-    </button>
+<h3 id="totalPrice"></h3>
+
+<button onclick="orderLine()" style="
+  background:#06C755;
+  color:white;
+  padding:15px 30px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+">
+  💬 สั่งผ่าน LINE
+</button>
   </a>
 </div>
 
@@ -152,6 +148,60 @@ btn.addEventListener("click", function(){
   btn.href = "https://line.me/R/ti/p/@376ignkd/?text=" + encoded;
 });
 </script>
+<script>
+function renderCart(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("cartItems");
+  const totalEl = document.getElementById("totalPrice");
 
+  container.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index)=>{
+    total += item.price * item.qty;
+
+    container.innerHTML += `
+      <div style="margin-bottom:15px; padding:10px; background:white; border-radius:10px;">
+        <b>${item.name}</b><br>
+        ราคา ${item.price} บาท x ${item.qty}
+      </div>
+    `;
+  });
+
+  totalEl.innerHTML = "ยอดรวมทั้งหมด: " + total + " บาท";
+}
+
+function orderLine(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if(cart.length === 0){
+    alert("ไม่มีสินค้าในตะกร้า");
+    return;
+  }
+
+  let message = "สวัสดีค่ะ ต้องการสั่งซื้อสินค้า:\n\n";
+  let total = 0;
+
+  cart.forEach(item=>{
+    message += `- ${item.name} (${item.price} บาท x ${item.qty})\n`;
+    total += item.price * item.qty;
+  });
+
+  message += `\nยอดรวมทั้งหมด: ${total} บาท`;
+
+  let encodedMessage = encodeURIComponent(message);
+
+  window.open(
+    "https://line.me/R/ti/p/@376ignkd?text=" + encodedMessage,
+    "_blank"
+  );
+
+  // ล้างตะกร้าหลังสั่ง
+  localStorage.removeItem("cart");
+}
+
+renderCart();
+</script>
 </body>
 </html>
