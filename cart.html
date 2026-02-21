@@ -16,28 +16,50 @@ body{
   background:white;
   padding:20px;
   border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 .item{
   border-bottom:1px solid #eee;
-  padding:10px 0;
+  padding:12px 0;
+}
+.item:last-child{
+  border-bottom:none;
 }
 .total{
   font-weight:bold;
   text-align:right;
   margin-top:15px;
+  font-size:18px;
 }
-button{
+.orderBtn{
   width:100%;
-  padding:12px;
+  padding:15px;
   background:#06C755;
   color:white;
   border:none;
-  border-radius:20px;
-  margin-top:15px;
-  font-size:16px;
+  border-radius:30px;
+  margin-top:20px;
+  font-size:18px;
+  cursor:pointer;
+}
+.removeBtn{
+  background:red;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  border-radius:10px;
+  margin-top:5px;
+  font-size:14px;
+  cursor:pointer;
+}
+.empty{
+  text-align:center;
+  padding:20px;
+  color:#888;
 }
 </style>
 </head>
+
 <body>
 
 <div class="box">
@@ -45,163 +67,86 @@ button{
 
 <div id="cartItems"></div>
 
-<h3 id="totalPrice"></h3>
+<div class="total" id="totalPrice"></div>
 
-<button onclick="orderLine()" style="
-  background:#06C755;
-  color:white;
-  padding:15px 30px;
-  border:none;
-  border-radius:30px;
-  font-size:18px;
-  cursor:pointer;
-">
-  💬 สั่งผ่าน LINE
+<button class="orderBtn" onclick="orderLine()">
+💬 สั่งผ่าน LINE
 </button>
-  </a>
+
 </div>
 
 <script>
 
+// โหลดตะกร้า
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let total = 0;
 
-const cartDiv = document.getElementById("cartItems");
+function renderCart(){
+  const cartDiv = document.getElementById("cartItems");
+  const totalDiv = document.getElementById("totalPrice");
 
-if(cart.length === 0){
-  cartDiv.innerHTML = "<p>ไม่มีสินค้าในตะกร้า</p>";
-}else{
-
-  cart.forEach((item, index) => {
-
-  total += item.price * item.qty;
-
-  cartDiv.innerHTML += `
-    <div class="item">
-      <b>${item.name}</b><br>
-      ราคา ${item.price} บาท × ${item.qty}
-      <br>
-      <button onclick="removeItem(${index})" 
-        style="background:red;color:white;border:none;padding:5px 10px;border-radius:10px;margin-top:5px;">
-        ลบสินค้า
-      </button>
-    </div>
-  `;
-});
-function removeItem(index){
-  cart.splice(index,1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  location.reload();
-}
-document.getElementById("totalPrice").innerText = total;
-}
-
-function sendCartToLine(){
+  cartDiv.innerHTML = "";
 
   if(cart.length === 0){
-    alert("ไม่มีสินค้าในตะกร้า");
+    cartDiv.innerHTML = "<div class='empty'>ไม่มีสินค้าในตะกร้า</div>";
+    totalDiv.innerHTML = "";
     return;
   }
 
-  let message = "สวัสดีค่ะ 🌸\nขอสั่งซื้อสินค้า\n\n";
-
-  cart.forEach(item=>{
-    message += `${item.name} × ${item.qty} = ${item.price * item.qty} บาท\n`;
-  });
-
-  message += `\nรวมทั้งหมด ${total} บาท`;
-
-  // 🔥 ส่งข้อมูลเข้า Google Sheet
-  fetch("https://script.google.com/macros/s/AKfycbwkqasWNWYPJJjHb_QOoRhXOZF8pztQp5igYPwoYX_N7rvaoAgKaWGxNsw1peShWYgg/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name: "ลูกค้า LINE",
-      phone: "-",
-      address: "-",
-      items: cart.map(i => i.name + " x" + i.qty).join(", "),
-      total: total
-    })
-  });
-
-  window.open(
-  "https://line.me/R/ti/p/@935abhab?text=" + encodeURIComponent(message),
-  "_blank"
-);
-
-  // ล้างตะกร้า
-  localStorage.removeItem("cart");
-}
-const btn = document.getElementById("lineOrderBtn");
-
-btn.addEventListener("click", function(){
-
-  const items = localStorage.getItem("cart") || "ไม่มีสินค้า";
-  const total = localStorage.getItem("total") || "0";
-
-  const message = `สวัสดีค่ะ\nขอสั่งสินค้า\n\nรายการ:\n${items}\n\nยอดรวม: ${total} บาท`;
-
-  const encoded = encodeURIComponent(message);
-
-  btn.href = "https://line.me/R/ti/p/@376ignkd/?text=" + encoded;
-});
-</script>
-<script>
-function renderCart(){
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const container = document.getElementById("cartItems");
-  const totalEl = document.getElementById("totalPrice");
-
-  container.innerHTML = "";
-
   let total = 0;
 
-  cart.forEach((item, index)=>{
+  cart.forEach((item,index)=>{
     total += item.price * item.qty;
 
-    container.innerHTML += `
-      <div style="margin-bottom:15px; padding:10px; background:white; border-radius:10px;">
+    cartDiv.innerHTML += `
+      <div class="item">
         <b>${item.name}</b><br>
-        ราคา ${item.price} บาท x ${item.qty}
+        ราคา ${item.price} บาท × ${item.qty}<br>
+        <button class="removeBtn" onclick="removeItem(${index})">
+          ลบสินค้า
+        </button>
       </div>
     `;
   });
 
-  totalEl.innerHTML = "ยอดรวมทั้งหมด: " + total + " บาท";
+  totalDiv.innerHTML = "ยอดรวมทั้งหมด: " + total + " บาท";
+}
+
+function removeItem(index){
+  cart.splice(index,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
 function orderLine(){
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if(cart.length === 0){
     alert("ไม่มีสินค้าในตะกร้า");
     return;
   }
 
-  let message = "สวัสดีค่ะ ต้องการสั่งซื้อสินค้า:\n\n";
+  let message = "สวัสดีค่ะ 🌸\nต้องการสั่งซื้อสินค้า\n\n";
   let total = 0;
 
   cart.forEach(item=>{
-    message += `- ${item.name} (${item.price} บาท x ${item.qty})\n`;
+    message += `- ${item.name} × ${item.qty} = ${item.price * item.qty} บาท\n`;
     total += item.price * item.qty;
   });
 
-  message += `\nยอดรวมทั้งหมด: ${total} บาท`;
+  message += `\nรวมทั้งหมด ${total} บาท`;
 
-  let encodedMessage = encodeURIComponent(message);
+  let encoded = encodeURIComponent(message);
 
-  window.open(
-    "https://line.me/R/ti/p/@376ignkd?text=" + encodedMessage,
-    "_blank"
-  );
+  // 🔥 เด้งเข้า LINE OA โดยตรง
+  window.location.href =
+  "https://line.me/R/oaMessage/@935abhab/?text=" + encoded;
 
-  // ล้างตะกร้าหลังสั่ง
+  // ล้างตะกร้า
   localStorage.removeItem("cart");
 }
 
 renderCart();
+
 </script>
+
 </body>
 </html>
