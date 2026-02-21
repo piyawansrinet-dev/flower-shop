@@ -48,8 +48,21 @@ button{
 <div class="total">
 ยอดรวม: <span id="totalPrice">0</span> บาท
 </div>
-
-<button onclick="sendCartToLine()">💬 สั่งซื้อทั้งหมดผ่าน LINE</button>
+<!-- ปุ่ม LINE -->
+<div style="text-align:center; margin:40px 0;">
+  <a id="lineOrderBtn" target="_blank">
+    <button style="
+      background:#06C755;
+      color:white;
+      border:none;
+      padding:15px 40px;
+      font-size:18px;
+      border-radius:40px;
+      cursor:pointer;
+    ">
+      💬 สั่งผ่าน LINE
+    </button>
+  </a>
 </div>
 
 <script>
@@ -125,7 +138,19 @@ function sendCartToLine(){
   // ล้างตะกร้า
   localStorage.removeItem("cart");
 }
+const btn = document.getElementById("lineOrderBtn");
 
+btn.addEventListener("click", function(){
+
+  const items = localStorage.getItem("cart") || "ไม่มีสินค้า";
+  const total = localStorage.getItem("total") || "0";
+
+  const message = `สวัสดีค่ะ\nขอสั่งสินค้า\n\nรายการ:\n${items}\n\nยอดรวม: ${total} บาท`;
+
+  const encoded = encodeURIComponent(message);
+
+  btn.href = "https://line.me/R/ti/p/@376ignkd/?text=" + encoded;
+});
 </script>
 
 </body>

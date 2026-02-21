@@ -94,7 +94,7 @@
     <h3>ดอกเบญจมาศสีชมพู</h3>
     <p>ราคา 15 บาท</p>
     จำนวน:
-    <<input type="number" value="1" min="1">
+    <input type="number" value="1" min="1">
     <br><br>
     <button onclick="addToCartSimple(this,'ดอกเบญจมาศสีชมพู',15)">
       เพิ่มลงตะกร้า
@@ -557,6 +557,21 @@ function buyNow(btn, name, price){
     "https://line.me/R/msg/text/?" + encodeURIComponent(message),
     "_blank"
   );
+}
+</script>
+<script>
+function filter(category){
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    if(category === "all"){
+      card.style.display = "block";
+    } else if(card.getAttribute("data-category") === category){
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
 }
 </script>
 </body>
