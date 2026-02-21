@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>แอดมินร้านดอกไม้</title>
+<style>
+body{
+  font-family:sans-serif;
+  background:#fff0f5;
+  padding:30px;
+}
+.box{
+  max-width:500px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
+}
+.stat{
+  font-size:20px;
+  margin:15px 0;
+}
+.big{
+  font-size:28px;
+  font-weight:bold;
+  color:#e91e63;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>📊 แดชบอร์ดร้านดอกไม้</h2>
+
+<div class="stat">
+ยอดขายวันนี้
+<div class="big" id="total">0</div>
+</div>
+
+<div class="stat">
+จำนวนออเดอร์วันนี้
+<div class="big" id="orders">0</div>
+</div>
+
+<div class="stat">
+สินค้าขายดีวันนี้
+<div class="big" id="best">-</div>
+</div>
+
+</div>
+
+<script>
+
+fetch("https://script.google.com/macros/s/AKfycbwkqasWNWYPJJjHb_QOoRhXOZF8pztQp5igYPwoYX_N7rvaoAgKaWGxNsw1peShWYgg/exec")
+.then(res => res.json())
+.then(data => {
+
+  document.getElementById("total").innerText = data.totalToday + " บาท";
+  document.getElementById("orders").innerText = data.orderCount + " รายการ";
+  document.getElementById("best").innerText = data.bestSeller;
+
+});
+
+</script>
+
+</body>
+</html>

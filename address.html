@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ข้อมูลจัดส่ง</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+body{font-family:sans-serif;background:#fff5f8;padding:20px;}
+.box{max-width:500px;margin:auto;background:white;padding:20px;border-radius:15px;}
+input{width:100%;padding:10px;margin:6px 0;border-radius:10px;border:1px solid #ccc;}
+button{width:100%;padding:12px;background:#ff69b4;color:white;border:none;border-radius:20px;font-size:16px;cursor:pointer;margin-top:10px;}
+#map{height:300px;margin-top:10px;border-radius:10px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+</style>
+</head>
+
+<body>
+<div class="box">
+<h2>📦 ข้อมูลจัดส่ง</h2>
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+<input id="phone" placeholder="เบอร์โทร">
+
+<div class="grid">
+<input id="house" placeholder="บ้านเลขที่">
+<input id="road" placeholder="ถนน">
+<input id="subdistrict" placeholder="ตำบล">
+<input id="district" placeholder="อำเภอ">
+<input id="province" placeholder="จังหวัด">
+<input id="postcode" placeholder="รหัสไปรษณีย์">
+</div>
+
+<div id="map"></div>
+
+<button onclick="goPay()">ไปชำระเงิน</button>
+</div>
+
+<script>
+var map = L.map('map').setView([13.736717,100.523186],6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+ attribution:'&copy; OpenStreetMap'
+}).addTo(map);
+
+var marker;
+
+map.on('click',function(e){
+
+ if(marker){map.removeLayer(marker);}
+ marker = L.marker(e.latlng).addTo(map);
+
+ fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}&accept-language=th`)
+ .then(res=>res.json())
+ .then(data=>{
+
+   if(!data.address){return;}
+
+   if(data.address.country !== "ประเทศไทย"){
+     alert("กรุณาเลือกที่อยู่ในประเทศไทยเท่านั้น");
+     map.removeLayer(marker);
+     return;
+   }
+
+   let a=data.address;
+
+   document.getElementById("house").value=a.house_number||"";
+   document.getElementById("road").value=a.road||"";
+   document.getElementById("subdistrict").value=a.suburb||a.village||"";
+   document.getElementById("district").value=a.county||"";
+   document.getElementById("province").value=a.state||"";
+   document.getElementById("postcode").value=a.postcode||"";
+
+ });
+
+});
+
+function goPay(){
+
+ let name = document.getElementById("name").value.trim();
+ let phone = document.getElementById("phone").value.trim();
+ let house = document.getElementById("house");
+ let road = document.getElementById("road");
+ let subdistrict = document.getElementById("subdistrict");
+ let district = document.getElementById("district");
+ let province = document.getElementById("province");
+ let postcode = document.getElementById("postcode");
+
+ if(!name || !phone || !house.value){
+   alert("กรุณากรอกข้อมูลให้ครบ");
+   return;
+ }
+
+ // บันทึกข้อมูลลง localStorage
+ localStorage.setItem("name", name);
+ localStorage.setItem("phone", phone);
+ localStorage.setItem("house", house.value);
+ localStorage.setItem("road", road.value);
+ localStorage.setItem("subdistrict", subdistrict.value);
+ localStorage.setItem("district", district.value);
+ localStorage.setItem("province", province.value);
+ localStorage.setItem("postcode", postcode.value);
+
+ window.location.href="payment.html";
+}
+
+</script>
+
+</body>
+</html>
