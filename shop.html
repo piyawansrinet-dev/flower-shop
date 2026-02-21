@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ร้านดอกไม้</title>
+
+  <style>
+    .category {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.category button {
+  margin: 5px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: none;
+  background: #ffb6c1;
+  cursor: pointer;
+}
+
+    body {
+      font-family: sans-serif;
+      background: #fff5f8;
+      padding: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    button {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<div style="text-align:right; margin-bottom:15px;">
+  <a href="cart.html" style="
+    background: hotpink;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+  ">
+    🧺 ตะกร้า (<span id="cartCount">0</span>)
+  </a>
+</div>
+
+<body>
+
+<h1>🌷 หมวดหมู่ 🌷</h1>
+
+<div class="category">
+  <button onclick="filter('worship')">ดอกไม้ไหว้พระ</button>
+  <button onclick="filter('bouquet')">ช่อดอกไม้</button>
+  <button onclick="filter('funeral')">งานศพ</button>
+  <button onclick="filter('garland')">พวงมาลัย</button>
+  <button onclick="filter('offering')">ของไหว้</button>
+</div>
+
+<div class="grid">
+  <div class="card" data-category="worship">
+    <img src="images/ban.jpg">
+    <h3>ดอกเบญจมาศสีเหลือง</h3>
+    <p>ราคา 15 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกเบญจมาศสีเหลือง',15)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+
+  <div class="card" data-category="worship">
+    <img src="images/ban3.jpg">
+    <h3>ดอกเบญจมาศสีชมพู</h3>
+    <p>ราคา 15 บาท</p>
+    จำนวน:
+    <<input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกเบญจมาศสีชมพู',15)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+
+  <div class="card" data-category="worship">
+    <img src="images/ban10.jpg">
+    <h3>ดอกเบญจมาศสีขาว</h3>
+    <p>ราคา 15 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกเบญจมาศสีขาว',15)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+
+  <div class="card" data-category="worship">
+    <img src="images/bo10.jpg">
+    <h3>ดอกบัวสีขาว</h3>
+    <p>ราคา 20 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกบัวสีขาว',20)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+
+<div class="card" data-category="worship">
+    <img src="images/brou10.jpg">
+    <h3>ดอกบัวสีชมพู</h3>
+    <p>ราคา 20 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกบัวสีชมพู',20)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+
+<div class="card" data-category="worship">
+    <img src="images/drou.jpg">
+    <h3>ดอกดาวเรือง</h3>
+    <p>ราคา 15 บาท</p>
+    จำนวน:
+   <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกดาวเรือง',15)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+<div class="card" data-category="worship">
+    <img src="images/kory1.jpg">
+    <h3>ดอกกล้วยไม้</h3>
+    <p>ราคา 15 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกกล้วยไม้',15)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+ <div class="card" data-category="bouquet">
+    <img src="images/kurap3.jpg">
+    <h3>ช่อดอกกุหลาบแดง</h3>
+    <p>ราคา 699 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ช่อดอกกุหลาบแดง',699)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurap4.jpg">
+    <h3>ช่อดอกกุหลาบชมพู</h3>
+    <p>ราคา 599 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ช่อดอกกุหลาบชมพู',599)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurap5.jpg">
+    <h3>ช่อดอกกุหลาบแดงเล็ก</h3>
+    <p>ราคา 119 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ช่อดอกกุหลาบแดงเล็ก',119)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurap6.jpg">
+    <h3>ช่อดอกกุหลาบแดง</h3>
+    <p>ราคา 759 บาท</p>
+    จำนวน:
+   <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+     <button onclick="buyNow(this,'ช่อดอกกุหลาบขาว',799)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+<div class="card" data-category="bouquet">
+    <img src="images/kurap7.jpg">
+    <h3>ช่อดอกกุหลาบขาว</h3>
+    <p>ราคา 799 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ช่อดอกกุหลาบขาว',799)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurap11.jpg">
+    <h3>ช่อดอกกุหลาบแดง</h3>
+    <p>ราคา 899 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ช่อดอกกุหลาบแดง',899)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurap10.jpg">
+    <h3>ช่อดอกกุหลาบเหลือง</h3>
+    <p>ราคา 599 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ช่อดอกกุหลาบเหลือง',599)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurap8.jpg">
+    <h3>ดอกกุหลาบแดง 1 ดอก</h3>
+    <p>ราคา 25 บาท</p>
+    จำนวน:
+   <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+   <button onclick="buyNow(this,'ดอกกุหลาบแดง 1 ดอก',25)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="bouquet">
+    <img src="images/kurup1.jpg">
+    <h3>ดอกกุหลาบแดง 1 ดอก พร้อมซอง</h3>
+    <p>ราคา 39 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'ดอกกุหลาบแดง 1 ดอก พร้อมซอง',39)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="garland">
+    <img src="images/marai.jpg">
+    <h3>มาลัยกรมะลิ</h3>
+    <p>ราคา 200 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'มาลัยกรมะลิ',200)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+ <div class="card" data-category="garland">
+    <img src="images/marai20.jpg">
+    <h3>มาลัยดาวเรือง</h3>
+    <p>ราคา 20 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'มาลัยดาวเรือง',20)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div> 
+  <div class="card" data-category="garland">
+    <img src="images/marai30.jpg">
+    <h3>มาลัยกรดาวเรือง</h3>
+    <p>ราคา 40 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'มาลัยกรดาวเรือง',40)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+ <div class="card" data-category="garland">
+    <img src="images/marai50 (2).jpg">
+    <h3>มาลัยกรมะลิ</h3>
+    <p>ราคา 50 บาท</p>
+    จำนวน:
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'มาลัยกรมะลิ',50)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+   <div class="card" data-category="garland">
+    <img src="images/marai70.jpg">
+    <h3>มาลัยกรมะลิ</h3>
+    <p>ราคา 70 บาท</p>
+    จำนวน:
+   <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    </button>
+    <button onclick="buyNow(this,'มาลัยกรมะลิ',70)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+   <div class="card" data-category="garland">
+    <img src="images/marai100.jpg">
+    <h3>มาลัยกรมะลิ</h3>
+    <p>ราคา 100 บาท</p>
+   <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า 
+    <button onclick="buyNow(this,'มาลัยกรมะลิ',100)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+   <div class="card" data-category="garland">
+    <img src="images/maray10.jpg">
+    <h3>มาลัยมะลิ</h3>
+    <p>ราคา 10 บาท</p>
+    <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+    <button onclick="buyNow(this,'มาลัยมะลิ',10)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+  </div>
+  <div class="card" data-category="funeral">
+  <img src="images/rad.jpg">
+  <h3>พวงหรีดดอกไม้สด</h3>
+  <p>ราคา 1,200 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'พวงหรีดดอกไม้สด',1200)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/rad2.jpg">
+  <h3>พวงหรีดดอกไม้สด</h3>
+  <p>ราคา 1,250 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'พวงหรีดดอกไม้สด',1250)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/red3.jpg">
+  <h3>พวงหรีดดอกไม้สด</h3>
+  <p>ราคา 1,300 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'พวงหรีดดอกไม้สด',1300)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/yai1.jpg">
+  <h3>ดอกเบญจมาศสีเหลืองทองมัดใหญ่</h3>
+  <p>ราคา 170 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ดอกเบญจมาศสีเหลืองทองมัดใหญ่',170)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/yai2.jpg">
+  <h3>ดอกเบญจมาศสีขาวมัดใหญ่</h3>
+  <p>ราคา 170 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ดอกเบญจมาศสีเหลืองมัดใหญ่',170)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/yai3.jpg">
+  <h3>ดอกคัตเตอร์มัดใหญ่</h3>
+  <p>ราคา 140 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <<button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ดอกคัตเตอร์มัดใหญ่',140)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/yai4.jpg">
+  <h3>ดอกเบญจมาศสีเหลืองมัดใหญ่</h3>
+  <p>ราคา 170 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ดอกเบญจมาศสีเหลืองมัดใหญ่',170)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="funeral">
+  <img src="images/yai5.jpg">
+  <h3>ดอกกล้วยไม้มัดใหญ่</h3>
+  <p>ราคา 180 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ดอกกล้วยไม้มัดใหญ่',180)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="offering">
+  <img src="images/kao1.jpg">
+  <h3>ชุดของไหว้ผลไม้</h3>
+  <p>ราคา 30 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ชุดของไหว้',30)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="offering">
+  <img src="images/mak.jpg">
+  <h3>หมากพลู</h3>
+  <p>ราคา 10 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'หมากพลู',10)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+<div class="card" data-category="offering">
+  <img src="images/vai.jpg">
+  <h3>ดอกไม้ถ้วย</h3>
+  <p>ราคา 35 บาท</p>
+  <input type="number" value="1" min="1">
+    <br><br>
+    <button onclick="addToCartSimple(this,'ดอกบัวสีขาว',20)">
+      เพิ่มลงตะกร้า
+  <button onclick="buyNow(this,'ดอกไม้ถ้วย',35)">
+  💬 สั่งซื้อผ่าน LINE
+</button>
+</div>
+
+<script>
+function addToCartSimple(btn, name, price){
+
+  const card = btn.closest(".card");
+  const qty = card.querySelector("input").value;
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const index = cart.findIndex(item => item.name === name);
+
+  if(index >= 0){
+    cart[index].qty += parseInt(qty);
+  }else{
+    cart.push({
+      name: name,
+      price: price,
+      qty: parseInt(qty)
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("เพิ่มสินค้าลงตะกร้าแล้ว");
+  updateCartCount();
+}
+</script>
+<script>
+const grid = document.querySelector(".grid");
+const products = JSON.parse(localStorage.getItem("products")) || [];
+
+products.forEach(p=>{
+  grid.innerHTML += `
+    <div class="card">
+      <img src="${p.img}" width="100%"><br>
+      <h3>${p.name}</h3>
+      <p>${p.price} บาท</p>
+
+      <a href="https://line.me/R/msg/text/?สวัสดีค่ะ%20สนใจสั่งซื้อ%20${p.name}" target="_blank">
+        <button style="background:#06C755;color:white;padding:8px 15px;border:none;border-radius:20px;">
+          💬 สั่งซื้อผ่าน LINE
+        </button>
+      </a>
+    </div>
+  `;
+});
+</script>
+<script>
+function buyNow(btn, name, price){
+
+  const card = btn.closest(".card");
+  const qty = card.querySelector("input").value;
+
+  let message = 
+`สวัสดีค่ะ 🌸
+ขอสั่งซื้อสินค้า
+
+สินค้า: ${name}
+ราคา: ${price} บาท
+จำนวน: ${qty}
+
+รบกวนสรุปราคาให้ด้วยค่ะ`;
+
+  window.open(
+    "https://line.me/R/msg/text/?" + encodeURIComponent(message),
+    "_blank"
+  );
+}
+</script>
+</body>
+</html>

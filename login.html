@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>เข้าสู่ระบบ</title>
+<style>
+body{
+  font-family:sans-serif;
+  background:#fff5f8;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.box{
+  background:white;
+  padding:30px;
+  width:300px;
+  border-radius:15px;
+  text-align:center;
+}
+input,button{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+button{
+  background:#ff69b4;
+  border:none;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+a{font-size:14px;}
+</style>
+</head>
+
+<body>
+<div class="box">
+  <h2>เข้าสู่ระบบ</h2>
+
+  <input type="text" id="user" placeholder="ชื่อผู้ใช้">
+  <input type="password" id="pass" placeholder="รหัสผ่าน">
+
+  <button onclick="login()">เข้าสู่ระบบ</button>
+  <p><a href="register.html">ยังไม่มีบัญชี? สมัครสมาชิก</a></p>
+</div>
+
+<script>
+function login(){
+  const u = document.getElementById("user").value;
+  const p = document.getElementById("pass").value;
+
+  if(localStorage.getItem(u) === p){
+    localStorage.setItem("user",u);
+    alert("เข้าสู่ระบบสำเร็จ");
+    window.location.href="shop.html";
+  }else{
+    alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+  }
+}
+</script>
+</body>
+</html>

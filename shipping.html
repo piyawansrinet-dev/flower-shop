@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ข้อมูลจัดส่ง</title>
+
+<!-- โหลด Leaflet (ฟรี) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+body{
+  font-family:sans-serif;
+  background:#fff5f8;
+  padding:20px;
+}
+.box{
+  max-width:450px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+}
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+button{
+  width:100%;
+  padding:12px;
+  background:#ff69b4;
+  color:white;
+  border:none;
+  border-radius:20px;
+  font-size:16px;
+  cursor:pointer;
+}
+#map{
+  height:300px;
+  margin-top:10px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>📦 ข้อมูลจัดส่ง</h2>
+
+<input id="name" placeholder="ชื่อ - นามสกุล">
+<textarea id="address" placeholder="ปักหมุดจากแผนที่"></textarea>
+<input id="phone" placeholder="เบอร์โทร">
+
+<div id="map"></div>
+
+<button onclick="goPay()">ไปชำระเงิน</button>
+</div>
+
+<script>
+// สร้างแผนที่
+var map = L.map('map').setView([13.736717, 100.523186], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+var marker;
+
+map.on('click', function(e){
+
+  if(marker){
+    map.removeLayer(marker);
+  }
+
+  marker = L.marker(e.latlng).addTo(map);
+
+  // ดึงที่อยู่จริงจาก OpenStreetMap ฟรี
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}&accept-language=th`)
+  .then(response => response.json())
+  .then(data => {
+
+    let addr = data.address;
+
+    let house = addr.house_number || "";
+    let road = addr.road || "";
+    let subdistrict = addr.suburb || addr.village || "";
+    let district = addr.city_district || addr.county || "";
+    let province = addr.state || "";
+    let postcode = addr.postcode || "";
+
+    let fullAddress = 
+      (house ? "บ้านเลขที่ " + house + " " : "") +
+      (road ? road + " " : "") +
+      (subdistrict ? "ตำบล" + subdistrict + " " : "") +
+      (district ? "อำเภอ" + district + " " : "") +
+      (province ? "จังหวัด" + province + " " : "") +
+      (postcode ? postcode : "");
+
+    document.getElementById("address").value = fullAddress;
+  })
+  .catch(error => {
+    document.getElementById("address").value =
+      "พิกัด: " + e.latlng.lat.toFixed(6) + ", " + e.latlng.lng.toFixed(6);
+  });
+
+});
+function goPay(){
+
+  let name = document.getElementById("name").value.trim();
+  let address = document.getElementById("address").value.trim();
+  let phone = document.getElementById("phone").value.trim();
+
+  if(!name || !address || !phone){
+    alert("กรุณากรอกข้อมูลให้ครบก่อนชำระเงิน");
+    return;
+  }
+
+  // บันทึกข้อมูลไว้ชั่วคราว
+  localStorage.setItem("customer_name", name);
+  localStorage.setItem("customer_address", address);
+  localStorage.setItem("customer_phone", phone);
+
+  // ไปหน้าชำระเงิน
+  window.location.href = "payment.html";
+}
+
+</script>
+
+
+</body>
+</html>

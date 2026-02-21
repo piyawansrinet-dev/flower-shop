@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ใบเสร็จ</title>
+<style>
+body{font-family:sans-serif;background:#fef6ff;padding:30px;}
+.receipt{
+ max-width:450px;
+ margin:auto;
+ background:white;
+ padding:20px;
+ border-radius:15px;
+ box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+h2{text-align:center;color:#ff69b4;}
+hr{border:dashed 1px #ccc;margin:15px 0;}
+.total{font-size:18px;font-weight:bold;text-align:right;}
+</style>
+</head>
+<body>
+
+<div class="receipt">
+<h2>🧾 ใบเสร็จรับเงิน</h2>
+
+<p><b>ชื่อลูกค้า:</b> <span id="r_name"></span></p>
+<p><b>เบอร์โทร:</b> <span id="r_phone"></span></p>
+<p><b>ที่อยู่:</b> <span id="r_address"></span></p>
+
+<hr>
+
+<p class="total">ยอดรวม: ฿199</p>
+
+<p style="text-align:center;">ขอบคุณที่ใช้บริการ 💖</p>
+</div>
+
+<script>
+
+// แสดงข้อมูลในใบเสร็จ
+document.getElementById("r_name").innerText = localStorage.getItem("name") || "-";
+document.getElementById("r_phone").innerText = localStorage.getItem("phone") || "-";
+
+let fullAddress =
+  "บ้านเลขที่ " + (localStorage.getItem("house") || "") +
+  " ถนน " + (localStorage.getItem("road") || "") +
+  " ต." + (localStorage.getItem("subdistrict") || "") +
+  " อ." + (localStorage.getItem("district") || "") +
+  " จ." + (localStorage.getItem("province") || "") +
+  " " + (localStorage.getItem("postcode") || "");
+
+document.getElementById("r_address").innerText = fullAddress;
+
+console.log("name:", localStorage.getItem("name"));
+console.log("phone:", localStorage.getItem("phone"));
+console.log("house:", localStorage.getItem("house"));
+console.log("road:", localStorage.getItem("road"));
+
+// เตรียมข้อมูลส่งเข้า Google Sheet
+let orderData = {
+  id: Date.now(),
+  name: localStorage.getItem("name"),
+  phone: localStorage.getItem("phone"),
+  house: localStorage.getItem("house"),
+  road: localStorage.getItem("road"),
+  subdistrict: localStorage.getItem("subdistrict"),
+  district: localStorage.getItem("district"),
+  province: localStorage.getItem("province"),
+  postcode: localStorage.getItem("postcode"),
+  total: 199,
+  status: "ชำระแล้ว",
+  tracking: ""
+};
+
+
+/let formData = new FormData();
+
+for (let key in orderData) {
+  formData.append(key, orderData[key]);
+}
+
+fetch("https://script.google.com/macros/s/AKfycbzUFvvI4SIOsEBxmOcSzp5l4LZIvySYHTgYmdqaClFtAwYU2RniTkykEqAWKToEoErZ/exec", {
+  method: "POST",
+  body: formData
+});
+
+
+</script>
+
+
+
+
+</body>
+</html>
